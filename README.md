@@ -1,6 +1,6 @@
 # Formal Verification of "On Perfect Functional Representations"
 
-This project formally verifies the main results from the paper "On Perfect Functional Representations" by Serhat Emre Coban, Yanina Y. Shkel, and Emre Telatar.
+This project formally verifies the main results from the paper "On Perfect Functional Representations" by Serhat Emre Coban, Yanina Y. Shkel, and Emre Telatar. Website: https://serhatemrecoban.github.io/perfect-functional-representations/
 
 ## Paper Overview
 
