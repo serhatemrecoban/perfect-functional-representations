@@ -1,1 +1,8 @@
-% Print-specific macros can be added here as the blueprint grows.
+% Print-only fallbacks for Blueprint annotations used in content.tex.
+\providecommand{\lean}[1]{\par\noindent\texttt{Lean: #1}\par}
+\providecommand{\leanok}{\par\noindent\textit{Formalization status: complete.}\par}
+\providecommand{\uses}[1]{\par\noindent\textit{Dependencies: #1}\par}
+\providecommand{\notready}{\par\noindent\textit{Formalization status: in progress.}\par}
+\providecommand{\discussion}[1]{\par\noindent\textit{Discussion issue: #1}\par}
+\providecommand{\proves}[1]{\par\noindent\textit{Proves: #1}\par}
+\providecommand{\mathlibok}{\par\noindent\textit{Available in mathlib.}\par}
