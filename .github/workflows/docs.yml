@@ -1,0 +1,39 @@
+name: Build project and documentation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Build Lean project
+        uses: leanprover/lean-action@v1
+        with:
+          build: true
+          lint: false
+          mk_all-check: false
+
+      - name: Build homepage, API docs, and blueprint
+        uses: leanprover-community/docgen-action@main
+        with:
+          blueprint: true
+          homepage: home_page
+          api-docs: true

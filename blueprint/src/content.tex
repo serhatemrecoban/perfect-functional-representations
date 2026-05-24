@@ -1,0 +1,163 @@
+\chapter{Blueprint Overview}
+
+This blueprint tracks the current Lean 4 scaffold for \paperTitle. The project already contains the main definition, lemma, and theorem declarations, while the proofs remain placeholders. The dependency graph on the generated website records the intended logical flow between those statements.
+
+\section{Core definitions}
+
+\begin{definition}[Equation (1)]
+\label{def:eq1}
+\lean{FunctionalRepresentation.satisfies_equation_one}
+A triple distribution satisfies Equation~(1) when the output variable $Y$ is expressed as a deterministic function of $X$ and an auxiliary variable $Z$ in the sense used in the paper's functional representation setup.
+\end{definition}
+
+\begin{definition}[Canonical functional representation]
+\label{def:canonical-representation}
+\lean{FunctionalRepresentation.CanonicalFunctionalRepresentation}
+A canonical functional representation packages an auxiliary type $W$, its distribution, and a decoder $X \to W \to Y$.
+\end{definition}
+
+\begin{definition}[Canonicality condition]
+\label{def:canonicality}
+\lean{FunctionalRepresentation.is_canonical_functional_representation}
+This predicate identifies when a canonical functional representation realizes the joint law of $(X,Y)$.
+\end{definition}
+
+\begin{definition}[Perfect representability]
+\label{def:perfect-representability}
+\lean{FunctionalRepresentation.perfectly_representable}
+A channel is perfectly representable when it admits an auxiliary variable achieving the perfect functional representation criterion studied in the paper.
+\end{definition}
+
+\begin{definition}[Singular channel]
+\label{def:singular-channel}
+\lean{FunctionalRepresentation.is_singular_channel}
+A channel is singular when every output value with positive mass has the same nonzero conditional probability across all inputs supporting it.
+\end{definition}
+
+\begin{definition}[Singular matrix]
+\label{def:matrix-singular}
+\lean{PerfectRepresentability.matrix_is_singular}
+The matrix model rephrases singularity for conditional probability matrices.
+\end{definition}
+
+\begin{definition}[Matrix perfect representability]
+\label{def:matrix-perfect}
+\lean{PerfectRepresentability.matrix_perfectly_representable}
+This is the matrix analogue of perfect representability.
+\end{definition}
+
+\begin{definition}[Reachability by PPS/VPS/PPM]
+\label{def:reachability}
+\lean{PerfectRepresentability.reachable_by_pps_vps_ppm}
+This relation records whether one conditional probability matrix can be transformed into another via the paper's PPS, VPS, and PPM operations.
+\end{definition}
+
+\begin{definition}[Reducibility to the one-vector matrix]
+\label{def:reducible}
+\lean{PerfectRepresentability.reducible_to_one_vector}
+Reducibility formalizes whether a singular matrix can be transformed to the one-vector target through the allowed operations.
+\end{definition}
+
+\begin{definition}[Linear-program criterion]
+\label{def:lp-criterion}
+\lean{PerfectRepresentability.primal_linear_program_attains_value_one}
+This predicate captures the primal linear-program feasibility statement used in the paper's final characterization.
+\end{definition}
+
+\section{Main results}
+
+\begin{lemma}[Canonical representations preserve the relevant information quantity]
+\label{lem:canonical}
+\lean{PerfectRepresentability.lemma_1_canonical_representation}
+For every functional representation satisfying Equation~(1), there exists a canonical functional representation with the same induced mutual information term.
+\end{lemma}
+
+\begin{proof}
+\notready
+\uses{def:eq1,def:canonical-representation,def:canonicality}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{lemma}[Singularity criterion for perfect representability]
+\label{lem:singularity}
+\lean{PerfectRepresentability.lemma_2_singularity}
+Perfect representability implies singularity, and under the binary hypotheses appearing in the paper the converse direction also holds.
+\end{lemma}
+
+\begin{proof}
+\notready
+\uses{def:perfect-representability,def:singular-channel}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{lemma}[Binary total-variation characterization]
+\label{lem:total-variation}
+\lean{PerfectRepresentability.lemma_3_total_variation}
+When $|X| = 2$, the maximal functional representation information is governed by a total-variation radius, and equality characterizes singularity.
+\end{lemma}
+
+\begin{proof}
+\notready
+\uses{lem:singularity,def:singular-channel}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{lemma}[Operation reordering]
+\label{lem:reordering}
+\lean{PerfectRepresentability.lemma_4_operation_reordering}
+Every reachable cascade of PPS, VPS, and PPM operations can be reordered into the normal form used in the paper.
+\end{lemma}
+
+\begin{proof}
+\notready
+\uses{def:reachability}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{lemma}[Preservation of perfect representability]
+\label{lem:preserve-repr}
+\lean{PerfectRepresentability.lemma_5_preservation_of_perfect_representability}
+PPM, PPS, and VPS operations preserve perfect representability for conditional probability matrices.
+\end{lemma}
+
+\begin{proof}
+\notready
+\uses{def:matrix-perfect,def:reachability}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{lemma}[Preservation of nonrepresentability]
+\label{lem:preserve-nonrepr}
+\lean{PerfectRepresentability.lemma_6_preservation_of_nonrepresentability}
+PPM, PPS, and VPM operations preserve failure of perfect representability.
+\end{lemma}
+
+\begin{proof}
+\notready
+\uses{def:matrix-perfect,def:reachability}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{theorem}[Operational characterization]
+\label{thm:characterization}
+\lean{PerfectRepresentability.theorem_1_characterization}
+A singular conditional probability matrix is perfectly representable exactly when it is reducible to the one-vector matrix.
+\end{theorem}
+
+\begin{proof}
+\notready
+\uses{def:matrix-singular,def:matrix-perfect,def:reducible,lem:reordering,lem:preserve-repr,lem:preserve-nonrepr}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}
+
+\begin{theorem}[Linear-program characterization]
+\label{thm:linear-program}
+\lean{PerfectRepresentability.theorem_2_linear_program}
+A conditional probability matrix is perfectly representable exactly when the associated primal linear program attains value one.
+\end{theorem}
+
+\begin{proof}
+\notready
+\uses{def:matrix-perfect,def:lp-criterion,thm:characterization}
+The Lean declaration exists, but the proof is still a placeholder.
+\end{proof}

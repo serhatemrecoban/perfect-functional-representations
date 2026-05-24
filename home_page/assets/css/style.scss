@@ -1,0 +1,227 @@
+---
+---
+
+:root {
+  --paper: #f4efe4;
+  --paper-strong: #ede3cf;
+  --ink: #17211c;
+  --muted: #49544e;
+  --accent: #0f5c52;
+  --accent-soft: #dcebe7;
+  --accent-strong: #083a34;
+  --line: rgba(23, 33, 28, 0.12);
+  --shadow: 0 20px 50px rgba(23, 33, 28, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top left, rgba(15, 92, 82, 0.14), transparent 38%),
+    radial-gradient(circle at bottom right, rgba(138, 85, 33, 0.12), transparent 32%),
+    linear-gradient(180deg, #f8f4ea 0%, #f1ead8 100%);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.page-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(237, 227, 207, 0.9));
+  box-shadow: var(--shadow);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -5rem -6rem auto;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(15, 92, 82, 0.18), transparent 68%);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--accent-strong);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.hero h1,
+.section h2,
+.card h2 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(2.8rem, 8vw, 5.4rem);
+  line-height: 0.95;
+}
+
+.lead {
+  max-width: 52rem;
+  margin: 1.2rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.pill {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(15, 92, 82, 0.18);
+  border-radius: 999px;
+  background: rgba(220, 235, 231, 0.55);
+  font-size: 0.92rem;
+}
+
+.section {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 16px 38px rgba(23, 33, 28, 0.08);
+}
+
+.section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
+}
+
+.section p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  display: block;
+  min-height: 100%;
+  padding: 1.4rem;
+  border: 1px solid rgba(15, 92, 82, 0.12);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(220, 235, 231, 0.65));
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(15, 92, 82, 0.28);
+  box-shadow: 0 16px 34px rgba(15, 92, 82, 0.12);
+}
+
+.card-kicker {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  color: var(--accent-strong);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.card p {
+  margin: 0.8rem 0 0;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.status-block {
+  padding: 1.2rem 1.3rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 18px;
+  background: var(--paper);
+}
+
+.status-block strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 1rem;
+}
+
+.status-block span {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    width: min(100% - 1rem, 100%);
+    padding: 0.8rem 0 2rem;
+  }
+
+  .hero,
+  .section {
+    padding: 1.35rem;
+    border-radius: 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    max-width: none;
+  }
+}

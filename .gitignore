@@ -1,0 +1,24 @@
+-- Lean build artifacts
+/.lake/
+/build/
+*.olean
+
+-- Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+
+-- IDE
+.vscode/
+.idea/
+*.iml
+
+-- Dependencies
+/.elan/
+
+-- Website and blueprint build artifacts
+/_site/
+/blueprint/web/
+/blueprint/print/
+/blueprint/.cache/

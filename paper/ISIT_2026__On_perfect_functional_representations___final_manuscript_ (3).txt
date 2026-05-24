@@ -1,0 +1,409 @@
+                    On Perfect Functional Representations
+                                       Serhat Emre Coban, Yanina Y. Shkel, and Emre Telatar
+
+
+
+   Abstract—For given random variables (X, Y ), functional rep-                  It is shown in [14], [16] that it is always possible to achieve
+resentation lemma states that there exists a random variable Z                 the upper bound in (3) within a logarithmic factor. That is,
+and a deterministic function g such that Y = g(X, Z), and X is                 there exists a Z such that
+independent of Z. In other words, Z captures all the information
+about Y not contained in X. We refer to Z as a ‘perfect                                H(Y |X) − log(I(X; Y ) + 1) − 4 ≤ I(Y ; Z).            (4)
+functional representation’ if it satisfies I(Y ; Z) = H(Y |X). We
+show that the existence of perfect representation depends solely               From this, we can easily see that the trivial upper bound
+on the conditional distribution pY |X and define the corresponding             in (3) is achieved asymptotically for product distributions.
+conditional distributions as perfectly representable. We provide
+a necessary and sufficient condition for pY |X to be perfectly                 That is, applying the construction in (4) to (X n , Y n ) gives the
+representable. Finally, we cast the problem of checking perfect                term I(X n ; Zn |Y n ) which is on the order of log n (and this
+representability as a linear program and discuss its computa-                  goes to zero if we normalize by n). This problem is further
+tional tractability.                                                           studied in the context of channel synthesis in [17] where it
+                                                                               is shown that the redundancy term I(X n ; Zn |Y n ) is 12 log n
+                          I. I NTRODUCTION                                     for (X n , Y n ) product pairs with a so-called non-singular
+   For given random variables (X, Y ), functional representa-                  conditional distribution pY |X . Moreover, for product pairs with
+tion lemma [1] states that there exists a random variable Z                    a singular conditional distribution, pY |X , the redundancy term
+and a deterministic function g such that Y = g(X, Z), and                      is shown to be sub-logarithmic.
+X is independent of Z. In other words, the triple (X, Y, Z)                       The goal of this paper is to characterize random variables
+satisfies                                                                      for which there exists a functional representation Z such that
+              I(X; Z) = 0        and    H(Y |X, Z) = 0.                 (1)    the trivial upper bound in (3) is achieved exactly. We call
+                                                                               such pairs (X, Y ) perfectly representable and Z a perfect
+A random variable Z that satisfies (1) is not unique. The                      functional representation of the pair (X, Y ). This problem is
+problem of finding a Z with minimum entropy has been                           surprisingly ubiquitous. As it is mentioned in [5], there exist
+studied extensively in [2]–[13] and references therein. The                    a perfect functional representation in some special cases: for
+problem of finding Z maximizing the mutual information with                    example, if X is a function of Y or Y is a function of X.
+Y has been a key technical ingredient in information theory                    In [14] it is shown that the term I(X; Z|Y ) is minimized
+problems such as channel synthesis [14]–[17], and many oth-                    by the Poisson functional representation whenever the sup-
+ers [14], [15]. Finally, there are many interesting connections                port of Y is two. This problem was further studied in [18]
+between functional representation and information-theoretic                    where it is shown that if Wyner’s common information for
+privacy [5], [6], [18]–[26].                                                   (X, Y ) is the same as the mutual information, then the pair
+   Of particular interest is the problem of finding a Z that                   is perfectly representable. Moreover, it could be observed
+is as informative as possible about Y in terms of mutual                       from [27], [28] that perfect representability is equivalent to
+information. That is, the goal is to maximize I(Y ; Z) under                   HK (GY X , Y ) = H(Y |X) where HK denotes Körner graph
+the constraints in (1). Observe that by the chain rule,                        entropy and the graph GY X is defined as in [29]. Likewise,
+I(Y ; Z) = H(Y |X) − I(X; Z|Y ) − H(Y |X, Z) + I(X; Z),                        perfect representability is equivalent to perfect privacy in the
+                                                    (2)                        privacy funnel, i.e., GPF (H(Y |X), X → Y ) = 0 (see [30]),
+                                                                               or equivalently g0 (X; Y ) = H(Y |X) (see [31]). Finally, this
+and by (1) we have                                                             problem could be viewed as a special case of the channel
+        I(Y ; Z) = H(Y |X) − I(X; Z|Y ) ≤ H(Y |X).                      (3)    synthesis problem in [17]. That is, we characterize exactly
+                                                                               when the redundancy term in channel synthesis is zero, and
+Hence, the maximum mutual information is trivially upper-                      not just vanishing asymptotically.
+bounded by H(Y |X), with equality whenever I(X; Z|Y ) = 0.
+                                                                                  The remainder of this paper is structured as follows. In II,
+This happens if and only if X −Y −Z, i.e., the triple (X, Y, Z)
+                                                                               we define and give some initial results on perfectly repre-
+forms a Markov chain.
+                                                                               sentable conditional distributions. In III, we provide our main
+     Serhat Emre Coban, Yanina Y. Shkel, and Emre Telatar are with             results which is a necessary and sufficient condition for perfect
+the School of Computer & Communication Sciences, École Polytechnique           representability. In IV, we present an algorithm for checking
+Fédérale de Lausanne (EPFL), Switzerland. Email: serhat.coban@epfl.ch,
+yanina.shkel@epfl.ch, emre.telatar@epfl.ch. This work is funded by the Swiss   if the conditional distribution is perfectly representable. Some
+NSF grant number 211337.                                                       of the proofs are omitted due to space constraints.
+                       II. P RELIMINARIES                            I(Y ; W ) satisfies (3) with equality. From Remark 1, we see
+  Let X and Y denote the support of X and Y respectively.            that (X, Y ) being perfectly representable or not depends on
+We assume, without loss of generality, that X = {1, 2, ..., k}       pY |X only. Hence, our main objective is reduced to investi-
+and Y = {1, 2, ..., m} for some k, m ∈ Z+ .                          gating the family of conditional distributions pY |X that are
+                                                                     perfectly representable.
+A. Basic Definitions
+                                                                     B. Singular Channels
+  Given a functional representation Z of (X, Y ) such that
+                                                                     Definition 3. A discrete channel pY |X is called singular if, for
+Y = f (X, Z), the vector
+                                                                     all y ∈ Y and all x1 , x2 ∈ X with pY |X (y|x1 )pY |X (y|x2 ) >
+                                              T
+                                                                     0, we have pY |X (y|x1 ) = pY |X (y|x2 ). Moreover, we call a
+                
+          W = f (1, Z) f (2, Z) . . . f (k, Z)         (5)
+                                                                     conditional probability matrix singular if it corresponds to a
+has the following properties:                                        singular channel.
+  1) W is independent of X.
+                                                                        Just like in [17], the concept of singular channels is impor-
+  2) With g(X, W ) := WX (i.e. X-th entry of the random
+                                                                     tant for our problem. As it turns out, singularity is a necessary
+     vector W ), we have Y = g(X, W ), consequently, W is
+                                                                     condition for perfect representability.
+     also a functional representation of (X, Y ).
+  3) Wi ∼ pY |X=i for each i ∈ {1, 2, . . . , k}.                    Lemma 2. If a conditional distribution pY |X is perfectly
+  4) I(Y ; W ) = I(Y ; Z).                                           representable, it is singular. Moreover, if pY |X is singular and
+First three properties are trivial, and the last one is shown        |X | = 2 or |Y| = 2, then pY |X is perfectly representable.
+in Lemma 1 below. This observation motivates the following              According to Lemma 2, singularity is a necessary condition
+definition which is also a result of the Lemma 3.22 from [32].       for a channel to be perfectly representable. It is also a sufficient
+Definition 1. For a given (X, Y ) ∼ pXY , a canoni-                  condition when |X | = 2 or |Y| = 2. However, it is not a
+cal functional representation of (X, Y ) is a random vector          sufficient condition in general.
+[W1 , W2 , ..., Wk ]T independent of X such that Wi ∼ pY |X=i        Example 1. For |X | = |Y| = 3, the channel
+for all i ∈ {1, 2, ..., k}.                                                                                 
+                                                                                              1/2 1/2 0
+Remark 1. If W is a canonical functional representation for                        pY |X = 1/2 0 1/2                               (8)
+(X, Y ), it is also a canonical functional representation for all                              0 1/2 1/2
+(X ′ , Y ′ ) with conditional distribution pY |X regardless of the
+distribution of X ′ .                                                is singular, but not perfectly representable.
+
+Lemma 1. Given an (X, Y, Z) triple that satisfies (1), there is      C. Total variation distance
+a canonical functional representation W for the pair (X, Y )           The total variation distance of two distributions over the
+that satisfies I(Y ; W ) = I(Y ; Z).                                 same alphabet is defined as
+Proof. Choose the random variable W as                                                         1X
+                                                                             TV(pX1 , pX2 ) =        |pX1 (x) − pX2 (x)|.     (9)
+                                              T                                               2
+                                                                                                   x∈X
+          W = f (1, Z) f (2, Z) . . . f (k, Z)                (6)
+                                                                        When |X | = 2, we can find the functional representation
+where f is such that Y = f (X, Z). Then, W is a function of          Z, for any pXY , that achieves the maximum I(Y ; Z) and
+Z. By applying the equality in (3) to both Z and W , we get          calculate the value of I(Y ; Z) in terms of the total variation
+      I(Y ; Z) − I(Y ; W ) = I(X; W |Y ) − I(X; Z|Y ).        (7)    distance between the conditional distributions.
+
+Since W is a function of Z, the left hand side of (7) is             Lemma 3. Given (X, Y ) ∼ pXY with |X | = 2, define
+non-negative and the right hand side of (7) is non-positive.                            r = TV(pY |X=1 ||pY |X=2 ).                 (10)
+Consequently, both sides are equal to zero.
+                                                                     The maximum value of I(Y ; Z) among the all functional rep-
+  Note that Lemma 1 implies that if there exists a functional        resentations Z equals to H(Y ) − rH(X). Moreover, rH(X)
+representation Z of (X, Y ) ∼ pXY , then there exists a              equals to I(X; Y ) if and only if pY |X is singular.
+canonical functional representation W that is as informative
+as Z about Y . Thus, it is sufficient to focus on canonical                                III. M AIN R ESULTS
+representations.                                                        In this section, we give the necessary and sufficient condi-
+                                                                     tion for a channel to be perfectly representable. Our approach
+Definition 2. A conditional distribution pY |X is said to be
+                                                                     is to define four basic operations on a singular conditional
+perfectly representable if there exists pW |Y such that W is a
+                                                                     distribution matrix. Three of these operations preserve the
+canonical functional representation for (X, Y ).
+                                                                     property of being perfectly representable and three of them
+  If pXY W = pW |Y pY |X pX , then X − Y − W is a Markov             preserve the property of not being perfectly representable.
+chain. If W is a canonical functional representation, then           We show that the set of all perfectly representable channels
+are exactly the channels which could be obtained via those             Example 3. For the same M as in Example 2,
+three operations that preserve the property of being perfectly                                                  
+                                                                                              1−β β       0    0
+representable from the trivial channel that maps every input
+                                                                                 B4,5 (M ) =  0    β 1 − β 0 .                   (13)
+to the same output.
+                                                                                              1−β 0       0    β
+A. Four Basic Operations
+                                                                       The pattern preserving merge operation is applied to the fourth
+   We can think of the channel pY |X as a conditional proba-           and fifth columns of M .
+bility matrix M of size k × m where k = |X | and m = |Y|.
+Note that the i’th column of M is pY |X (i|·). By Lemma 2,                3) Value preserving split (VPS): Let l ∈ [1 : m] and b ∈
+all perfectly representable matrices must be singular. Since           {0, 1}k . The value preserving split operation Cl,b : Sk,m →
+singularity is easy to check, we focus on singular matrices            Sk,m+1 is the operation that takes a singular matrix and splits
+from now on.                                                           the l’th column (whose value is β ∈ (0, 1) and whose pattern
+                                                                       is p ∈ {0, 1}k ) into 2 columns (that will correspond to l’th
+Definition 4. For a singular conditional probability matrix            and (l + 1)’th columns in the resulting matrix Cl,b (M )). Both
+M , the unique non-zero value of the non-zero entries in a             columns of the new matrix will have value β and patterns
+column is called the "value" of that column. Moreover, a               p1 ∈ {0, 1}k and p2 ∈ {0, 1}k respectively where p1 = p · b
+column divided by its value β is called the "pattern" of that          and p2 = p · (1k − b). Note that · represents elementwise
+column. So, the pattern of column i is the vector M [:, i]/β.          multiplication and 1k represents the vector of size k all whose
+   In Example 1, the first column of the singular matrix has           entries are 1.
+value β = 1/2 and pattern [1, 1, 0]T .                                 Example 4. For the same M as in Example 2,
+   We define four operations on singular matrices. Note that                                                                       
+it is straightforward to see that the result of these operations                           1−β   0     β   0       0             0
+will be singular matrices as well. Let S denote the set of all         C1,[1,1,0]T (M ) =  0    0     β 1−β       0             0 .
+singular matrices and Sk,m denote the set of singular matrices                              0  1−β 0       0      β/2           β/2
+of size k × m.                                                                                                                     (14)
+   1) Pattern preserving split (PPS): Let α ∈ (0, 1) and               The value preserving split operation is applied to the first
+l ∈ {1, 2, ..., m}. The pattern preserving split operation             column of M with the splitting vector of [1, 1, 0]T .
+Al,α : Sk,m → Sk,m+1 is the operation that takes a singular
+matrix M and splits the l’th column into two columns (that                4) Value preserving merge (VPM): Let l1 , l2 ∈ {1, 2, ..., m}
+will correspond to l’th and (l + 1)’th columns in the resulting        be such that the l1 ’th and l2 ’th columns of M have the same
+matrix Al,α (M )) that are α and (1 − α) times the original            value β ∈ (0, 1] and patterns p1 ∈ {0, 1}k and p2 ∈ {0, 1}k
+column.                                                                that satisfy p1 + p2 ∈ {0, 1}k .
+                                                                          The value preserving merge (VPM) operation Dl1 ,l2 :
+Example 2. Let
+                                                                     Sk,m+1 → Sk,m is the operation that takes a singular matrix
+               1−β          β     0        0      0                    M and merges l1 ’th and l2 ’th columns into a single column
+           M = 0           β    1−β       0      0 ,         (11)    with the pattern p1 + p2 and the value β (that will correspond
+               1−β          0     0       β/2    β/2                   to min{l1 , l2 }’th column in the resulting matrix Dl1 ,l2 (M )).
+then,                                                                  Example 5. For the same M as in Example 2,
+                                                             
+                 1−β        β/2 β/2   0             0      0
+                                                                                                                 
+                                                                                             1−β β       0    0
+  A2,1/2 (M ) =  0         β/2 β/2 1 − β           0      0 .                 D1,3 (M ) = 1 − β β     0    0 .                 (15)
+                 1−β         0   0    0            β/2    β/2                                1 − β 0 β/2 β/2
+                                                              (12)
+                                                                       The value preserving merge operation is applied to the first
+The pattern preserving split operation is applied to the second        and third columns of M .
+column of M with the splitting ratio of 1/2.
+                                                                         We explain how the order of these operations can be
+    2) Pattern preserving merge (PPM): The pattern preserving          manipulated in the following lemma.
+merge operation Bl1 ,l2 : Sk,m+1 → Sk,m for some distinct
+l1 , l2 ∈ {1, 2, ..., m} is the operation that takes a singular        Lemma 4. For any sequence of PPS, VPS, PPM operations,
+matrix M and merges l1 ’th and l2 ’th columns (assuming that           there exists an equivalent cascade that consists of a sequence
+they have the same pattern). The new column will correspond            of PPS operations, followed by a sequence of VPS operations,
+to min{l1 , l2 }’th column in the resulting matrix Bl1 ,l2 (M ) that   and finally a sequence of PPM operations.
+equals to the sum of these two columns (i.e. Bl1 ,l2 (M )[i, l] =
+M [i, l1 ] + M [i, l2 ] for all i ∈ {1, 2, ..., k}). Then, it shifts   B. Perfect Representability
+the columns on the right side of max{l1 , l2 }’th column to the          We are now ready to find the family of channels that are
+left and leaves the remaining columns unchanged to get the             perfectly representable. We start with a channel pY |X that
+resulting matrix.                                                      maps every x ∈ X to a unique a ∈ Y. This channel has a
+conditional probability matrix which is the all ones vector         of M has a distinct pattern. That is, it has m ≤ 2k −1 columns
+of length k and is clearly perfectly representable (choose          with distinct patterns p1 , p2 , ..., pm with values v1 , v2 , ..., vm
+Z = a). By Lemma 5, all matrices that we obtained from              in [0, 1]. Thus, our singular conditional probability matrix
+this matrix with the repeated use of pattern preserving split,      could be solely defined by the vector of values v and patterns
+pattern preserving merge, and value preserving split opera-         p1 , p2 , ..., pm .
+tions are perfectly representable. Finally, we will prove that
+these conditional probability matrices are the only perfectly       A. Primal LP
+representable conditional probability matrices.                       Consider the all possible sets of binary vectors of length
+Theorem 1. A singular k × m conditional probability matrix          k (other than all zeros vector) that add up to 1k . Note that
+M is perfectly representable if and only if it is possible to       the addition here is in real numbers arithmetic, not modulo
+obtain the vector 1k from M via a repeated use of PPM,              2 arithmetics. Let’s call these sets as S1 , S2 , ..., SR where R
+PPS, and VPM operations defined in section III-A.                   equals to the k-th Bell number which is the number of set
+                                                                    partitions of a k-element set [33].
+   Recall that 1k is the all ones vector of size k and that 1k is
+perfectly representable. The "if" part of the proof is a direct     Example 6. For k = 3, R will equal to 5 and our sets will
+result of the following Lemmas.                                     be S1 = {[1, 1, 1]T }, S2 = {[1, 1, 0]T , [0, 0, 1]T }, ..., S5 =
+                                                                    {[1, 0, 0]T , [0, 1, 0]T , [0, 0, 1]T }.
+Lemma 5. The result of applying PPM, PPS, and VPS oper-
+ations described in section III-A to a perfectly representable         The question is whether we can assign some weights
+channel will also be a perfectly representable channel.             x1 , x2 , ..., xR in [0, 1] to these sets such that
+                                                                                       X
+   Since PPM and PPS operations are inverses of each other,                                   xj = vi , ∀i ∈ {1, 2, ..., m} (16)
+the result of applying PPM and PPS operations to a channel                         j:pi ∈Sj
+
+that is not perfectly representable will also be a channel that        Assigning such weights x1 , x2 , ..., xR to the sets
+is not perfectly representable. Moreover, since VPM and VPS         S1 , S2 , ..., SR is equivalent to:
+operations are inverses of each other, the result of applying          1) First, from 1k , obtain the matrix with columns whose
+VPM operation to a channel that is not perfectly representable      values are x1 , x2 , ..., xR and patterns are all 1k by PPS
+will also be a channel that is not perfectly representable. Thus,   operation.
+Lemma 6 is a direct result of Lemma 5.                                 2) Then, split the i-th column with respect to Si by VPS
+Lemma 6. The result of applying PPM, PPS, and VPM                   operation for all i ∈ {1, 2, ..., R}.
+operations described in section III-A to a channel that is             3) Finally, merge all columns with the same pattern by PPM.
+not perfectly representable will also be a channel that is not         Then, by Lemma 4, doing any cascade of PPS, VPS,
+perfectly representable.                                            and PPM operations is equivalent to assigning weights
+                                                                    x1 , x2 , ..., xR to the sets S1 , S2 , ..., SR .
+  See the Appendix for the "only if" part of the proof of              Now, let’s define the matrix H ∈ {0, 1}m×R such that
+Theorem 1.                                                          Hij = 1{pi ∈ Sj }.
+Remark 2. By the equivalences noted in the introduction,            Example 7. For p1 = [1, 0, 0]T , p2 = [0, 1, 0]T , . . . , p6 =
+Theorem 1 also characterizes exactly when                           [0, 1, 1]T , p7 = [1, 1, 1]T , and k = 3, H can be calculated as
+             HK (GY X , Y ) = H(Y |X),      (see [27]–[29]),                                   
+                                                                                                 0 0 0 1 1
+                                                                                                                
+   GPF (H(Y |X), X → Y ) = 0,               (see [30]),                                         0 0 1 0 1
+                                                                                                               
+                  g0 (X; Y ) = H(Y |X),     (see [31]).                                         0 1 0 0 1
+                                                                                                               
+                                                                                        H=     0 1 0 0 0                     (17)
+                                                                                                                
+Equivalently, it characterizes exactly when the redundancy                                      0 0 1 0 0
+term in channel synthesis is zero (see [17]).                                                  
+                                                                                                0 0 0 1 0
+                                                                                                                
+
+                IV. A LGORITHMIC R ESULTS                                                        1 0 0 0 0
+   In this section, we will focus on the problem of checking           Assigning weights xP = [x1 , x2 , ..., xR ]T to the sets
+if a conditional distribution pY |X is perfectly representable .    S1 , S2 , ..., SR such that j:pi ∈Sj xj = vi , ∀i ∈ {1, 2, ..., m}
+   Note that checking whether a matrix is a singular condi-         is equivalent to the existence of an x satisfying Hx = v.
+tional probability matrix or not can be done in linear time.        Therefore, our singular conditional probability matrix is per-
+Thus, we can assume that we are working with singular               fectly representable if and only if there exists an x ∈ [0, 1]R
+conditional probability matrices. A matrix M is obtainable          satisfying Hx = v where v is the vector of values that
+from 1k by PPS, PPM, VPS operations if and only if the              corresponds to our matrix. Moreover, note that the entries of v
+matrix M ′ that is obtained from M by merging all columns           can not be greater than 1 and H is binary matrix, so a solution
+with the same pattern is obtainable from 1k by PPS, PPM,            x for this linear system Hx = v can not have an entry greater
+VPS operations. Therefore, we can assume that each column           than 1 either.
+   The perfect representability of our matrix is determined by     Moreover, Y is a deterministic function of Y ′ and the matrix
+the existence of x ≥ 0 satisfying Hx = v. We formalize this        pY ′ |X can be obtained from the matrix pY |X by the PPS
+with the following Theorem.                                        operation, so it is sufficient to show that 1k can be obtained
+                                                                   from pY ′ |X via PPM and VPM operations. As PPS is the
+Theorem 2. A matrix M is perfectly representable if and only
+                                                                   inverse of PPM, and VPS is the inverse of VPM, it thus
+if the corresponding vector v and the matrix H acquired by
+                                                                   suffices to show that the matrix pY ′ |X can be obtained from 1k
+the above procedure satisfy
+                                                                   via PPS and VPS operations. This is shown in the following
+                       max 1R · x = 1                      (18)    paragraphs.
+                        x≥0
+                       Hx≤v                                           Next, fix w ∈ W and let
+   Thus, we can use an algorithm that solves this LP to deter-                            Yw′ := {(y, w) ∈ Y ′ : y ∈ Y}.                                     (23)
+mine whether a given matrix M is perfectly representable or
+not after ensuring that M is a singular conditional probability    Note that Y ′ can be partitioned into Yw′ ’s. Since W is a
+matrix. If M is not a singular conditional probability matrix,     functional representation of (X, Y ), for a fixed x and fixed w,
+then we say that it is not perfectly representable and we do       there is a unique (y, w) ∈ Yw′ — namely (y, w) = g ′ (x, w)
+not need to solve the linear program.                              — such that
+B. Dual LP                                                                                     pY ′ |X ((y, w)|x) > 0,                                       (24)
+   We can also solve the dual LP which has m variables             and, for any ỹ ̸= y,
+instead:
+                                                                                               pY ′ |X ((ỹ, w)|x) = 0.                                      (25)
+Corollary 1. A matrix M is perfectly representable if and
+only if the corresponding vector v and the matrix H acquired       Moreover,
+by the above procedure satisfy
+                                                                                     pY ′ |X (g ′ (x, w)|x) = pW (w) > 0.                                    (26)
+                        min v · y = 1                      (19)
+                        y≥0                                        Hence, pY ′ |X (g ′ (x, w)|x) is positive and does not depend on
+                       H T y≥1                                     x.
+  Here, our variables are y = (y1 , ..., ym ), thus we have m ≤       Finally, for each y ′ ∈ Yw′ , let Sy′ be the set
+2k − 1 variables.
+                                                                                Sy′ = {x ∈ {1, 2, ..., k} : g ′ (x, w) = y ′ }.                              (27)
+C. Concluding Remarks
+                                                                   Since the set
+   We find a necessary and sufficient condition for a con-
+ditional distribution pY |X to be perfectly representable. We                     {pY ′ |X (y ′ |x) · pW |Y ′ (w|y ′ ) : y ′ ∈ Y ′ }                         (28)
+provide an algorithm to test for perfect representability by
+                                                                   has exactly one non-zero element for any (x, w) pair, for each
+casting the problem as a linear program. The dual linear
+                                                                   w, the collection {Sy′ : y ′ ∈ Yw′ } is a partition of {1, 2, ..., k}.
+program has at most m ≤ 2k − 1 variables. Thus, while it
+                                                                   Now for each y ′ ∈ Yw′ , let by′ be a vector of size k whose
+could be exponential in the size of X , it is linear in the size
+                                                                   j-th element is 1{j ∈ Sy′ }. We can apply PPS operation to 1k
+of Y. The number of constraints depends on the Bell number
+                                                                   with coefficients cw = pW (w), and get vectors with patterns
+R and could be exponential in k. We leave the question of
+                                                                   1k and values cw for all w ∈ W. Then, for all w ∈ W, we
+whether this linear program could be solved efficiently to the
+                                                                   can apply VPS operation to the column with pattern 1k and
+future work.
+                                                                   value cw with coefficients by′ and get pY ′ |X as illustrated in
+                           A PPENDIX                               Figure 1.
+  Proof of Theorem 1 (only if part):
+  We show that if a matrix M associated with pY |X is                                 Y                Y                                      Y
+perfectly representable, then 1k could be obtained from M                                                                    ...
+with repeated use of PPM, VPM, and PPS operations. Since
+M is perfectly representable, there exists a perfect canonical
+functional representation W . Without loss of generality, we
+                                                                          =
+may assume that for each w, pW (w) > 0.                                                                               exactly one non -
+                                                                                 all entries are all entries are     zero entry in each   all entries are
+  First, let Y ′ = (Y, W ), so we have Y − Y ′ − W and                           either      or 0 either      or 0      small block       either      or 0
+                                                                                  in this block    in this block                           in this block
+              pW |Y ′ (w′ |(y, w)) = 1{w′ = w},            (20)
+                pY ′ |Y ((y, w)|y) = pW |Y (w|y).          (21)                   use vpm to         use vpm to              ...           use vpm to
+                                                                                  get                get                                   get
+
+Note that W is a perfect functional representation for (X, Y ′ )                                            use ppm to get
+since X − Y ′ − W and
+        Y ′ = (Y, W ) = (g(X, W ), W ) =: g ′ (X, W ).     (22)               Fig. 1. Using VPM and PPM to obtain 1k from pY ′ |X
+                             R EFERENCES                                        [22] ——, “Variable-length coding with zero and non-zero privacy leakage,”
+                                                                                     Entropy, vol. 27, no. 2, p. 124, 2025.
+ [1] A. E. Gamal and Y.-H. Kim, Network Information Theory. Cambridge           [23] ——, “Private semantic communications with separate blind encoders,”
+     University Press, 2011.                                                         CoRR, vol. abs/2412.17658, 2024.
+ [2] F. Cicalese, L. Gargano, and U. Vaccaro, “Minimum-entropy couplings        [24] Y. Liu, W. Chen, A. Özgür, and C. T. Li, “Universal exact compression
+     and their applications,” IEEE Transactions on Information Theory,               of differentially private mechanisms,” in Advances in Neural Information
+     vol. 65, no. 6, pp. 3436–3451, 2019.                                            Processing Systems, vol. 37, 2024.
+ [3] S. Compton, “A tighter approximation guarantee for greedy minimum          [25] Y. Liu and C. T. Li, “One-shot information hiding,” in 2024 IEEE
+     entropy coupling,” in 2022 IEEE International Symposium on Informa-             Information Theory Workshop (ITW), 2024, pp. 169–174.
+     tion Theory (ISIT), 2022, pp. 168–173.                                     [26] Y. Shkel, “Functional representation lemma: Algorithms and applica-
+ [4] S. Compton, D. Katz, B. Qi, K. Greenewald, and M. Kocaoglu,                     tions,” in International Zurich Seminar on Information and Communi-
+     “Minimum-entropy coupling approximation guarantees beyond the ma-               cation (IZS 2024), Proceedings. ETH Zurich, 2024, pp. 26–27.
+     jorization barrier,” in Proceedings of The 26th International Conference   [27] J. Körner, “Coding of an information source having ambiguous alphabet
+     on Artificial Intelligence and Statistics, ser. Proceedings of Machine          and the entropy of graphs,” in Transactions of the Sixth Prague Con-
+     Learning Research, vol. 206. PMLR, 25–27 Apr 2023, pp. 10 445–                  ference on Information Theory, Statistical Decision Functions, Random
+     10 469.                                                                         Processes. Prague: Academia, Publishing House of the Czechoslovak
+                                                                                     Academy of Sciences, 1973, pp. 411–425, conference held in Prague,
+ [5] Y. Y. Shkel, R. S. Blum, and H. V. Poor, “Secrecy by design with appli-
+                                                                                     Sept. 19–25, 1971; proceedings published 1973.
+     cations to privacy and compression,” IEEE Transactions on Information
+                                                                                [28] N. Alon and A. Orlitsky, “Source coding and graph entropies,” IEEE
+     Theory, vol. 67, no. 2, pp. 824–843, 2021.
+                                                                                     Trans. Inf. Theory, vol. 42, no. 5, pp. 1329–1339, 1996. [Online].
+ [6] Y. Y. Shkel and H. V. Poor, “A compression perspective on secrecy
+                                                                                     Available: https://doi.org/10.1109/18.532875
+     measures,” IEEE Journal on Selected Areas in Information Theory,
+                                                                                [29] C. T. Li and A. El Gamal, “Extended gray–wyner system with com-
+     vol. 2, no. 1, pp. 163–176, 2021.
+                                                                                     plementary causal side information,” IEEE Transactions on Information
+ [7] C. T. Li, “Efficient approximate minimum entropy coupling of multiple           Theory, vol. 64, no. 8, pp. 5862–5878, Aug. 2018.
+     probability distributions,” IEEE Transactions on Information Theory,       [30] A. Makhdoumi, S. Salamatian, N. Fawaz, and M. Médard, “From the
+     vol. 67, no. 8, pp. 5259–5268, 2021.                                            information bottleneck to the privacy funnel,” CoRR, vol. abs/1402.1774,
+ [8] M. Rossi, “Greedy additive approximation algorithms for minimum-                2014. [Online]. Available: http://arxiv.org/abs/1402.1774
+     entropy coupling problem,” in 2019 IEEE International Symposium on         [31] S. Asoodeh, F. Alajaji, and T. Linder, “Notes on information-theoretic
+     Information Theory (ISIT), 2019, pp. 1127–1131.                                 privacy,” CoRR, vol. abs/1510.02318, 2015. [Online]. Available:
+ [9] A. Painsky, S. Rosset, and M. Feder, “Innovation representation of              http://arxiv.org/abs/1510.02318
+     stochastic processes with application to causal inference,” IEEE Trans-    [32] O. Kallenberg, Foundations of Modern Probability, 2nd ed., ser. Prob-
+     actions on Information Theory, vol. 66, no. 2, pp. 1136–1154, 2020.             ability and Its Applications. New York, NY: Springer, 2002.
+[10] Y. Y. Shkel and A. Kumar Yadav, “Information spectrum converse for         [33] N. Asai, I. Kubo, and H.-H. Kuo, “Bell numbers, log-concavity, and
+     minimum entropy couplings and functional representations,” in 2023              log-convexity,” Acta Applicandae Mathematicae, vol. 63, no. 1–3, pp.
+     IEEE International Symposium on Information Theory (ISIT), 2023, pp.            79–87, 2000.
+     66–71.
+[11] A. K. Yadav and Y. Y. Shkel, “Approximation guarantees for minimum
+     rényi entropy functional representations,” in 2025 IEEE International
+     Symposium on Information Theory (ISIT), 2025, pp. 1–6.
+[12] S. Compton, K. Greenewald, D. A. Katz, and M. Kocaoglu,
+     “Entropic causal inference: Graph identifiability,” in Proceedings
+     of the 39th International Conference on Machine Learning, ser.
+     Proceedings of Machine Learning Research, K. Chaudhuri, S. Jegelka,
+     L. Song, C. Szepesvari, G. Niu, and S. Sabato, Eds., vol.
+     162. PMLR, 17–23 Jul 2022, pp. 4311–4343. [Online]. Available:
+     https://proceedings.mlr.press/v162/compton22a.html
+[13] M. Kocaoglu, A. G. Dimakis, S. Vishwanath, and B. Hassibi, “Entropic
+     causality and greedy minimum entropy coupling,” in 2017 IEEE Interna-
+     tional Symposium on Information Theory (ISIT), 2017, pp. 1465–1469.
+[14] C. T. Li and A. E. Gamal, “Strong functional representation lemma
+     and applications to coding theorems,” 2018. [Online]. Available:
+     https://arxiv.org/abs/1701.02827
+[15] C. T. Li and V. Anantharam, “A unified framework for one-shot
+     achievability via the poisson matching lemma,” IEEE Transactions on
+     Information Theory, vol. 67, no. 5, p. 2624–2651, May 2021. [Online].
+     Available: http://dx.doi.org/10.1109/TIT.2021.3058842
+[16] P. Harsha, R. Jain, D. McAllester, and J. Radhakrishnan, “The commu-
+     nication complexity of correlation,” IEEE Transactions on Information
+     Theory, vol. 56, no. 1, pp. 438–449, 2010.
+[17] S. M. Sriramu and A. B. Wagner, “Optimal redundancy in exact channel
+     synthesis,” 2024. [Online]. Available: https://arxiv.org/abs/2401.16707
+[18] A. Zamani, T. J. Oechtering, and M. Skoglund, “On the privacy-utility
+     trade-off with and without direct access to the private data,” IEEE
+     Transactions on Information Theory, vol. 70, no. 3, pp. 2177–2200,
+     March 2024.
+[19] ——, “A design framework for strongly χ2 -private data disclosure,”
+     IEEE Transactions on Information Forensics and Security, vol. 16, pp.
+     2312–2325, 2021.
+[20] ——, “Data disclosure with non-zero leakage and non-invertible leakage
+     matrix,” IEEE Transactions on Information Forensics and Security,
+     vol. 17, pp. 165–179, 2022.
+[21] A. Zamani and M. Skoglund, “Extended functional representation
+     lemma: A tool for privacy, semantic representation, caching, and com-
+     pression design,” CoRR, vol. abs/2410.05033, 2024.
+
