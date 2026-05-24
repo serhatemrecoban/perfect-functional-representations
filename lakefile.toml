@@ -1,0 +1,6 @@
+name = "PerfectFunctionalRepresentations"
+defaultTargets = ["PerfectFunctionalRepresentations"]
+
+[[lean_lib]]
+name = "PerfectFunctionalRepresentations"
+globs = ["PerfectFunctionalRepresentations.+"]
