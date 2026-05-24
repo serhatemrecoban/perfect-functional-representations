@@ -1,5 +1,5 @@
 % Print-only fallbacks for Blueprint annotations used in content.tex.
-\providecommand{\lean}[1]{\par\noindent\texttt{Lean: #1}\par}
+\providecommand{\lean}[1]{\par\noindent\texttt{Lean: \detokenize{#1}}\par}
 \providecommand{\leanok}{\par\noindent\textit{Formalization status: complete.}\par}
 \providecommand{\uses}[1]{\par\noindent\textit{Dependencies: #1}\par}
 \providecommand{\notready}{\par\noindent\textit{Formalization status: in progress.}\par}
