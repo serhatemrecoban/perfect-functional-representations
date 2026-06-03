@@ -11,15 +11,15 @@ The paper characterizes random variables (X, Y) for which there exists a perfect
 
 ## Project Structure
 
-- `PerfectFunctionalRepresentations/InfoTheory.lean`: basic information-theoretic objects and placeholder definitions
+- `PerfectFunctionalRepresentations/InfoTheory.lean`: project-local finite-sum primitives and basic information-theoretic objects used by the formalization
 - `PerfectFunctionalRepresentations/FunctionalRepresentation.lean`: functional representations, canonicality, singularity, and perfect representability
-- `PerfectFunctionalRepresentations/Main.lean`: Lemma 1-3 and Theorem 1-2 as Lean statements with `sorry` proofs
+- `PerfectFunctionalRepresentations/Main.lean`: constructive development for theorem 1, related reduction machinery, and the paper's main statements
 - `PerfectFunctionalRepresentations.lean`: top-level library entry point
 
 ## Building the Project
 
 ```bash
-lake build
+lake build PerfectFunctionalRepresentations.Main
 ```
 
 ## Website and Dependency Graph
@@ -52,13 +52,17 @@ leanblueprint serve
 
 - [x] Project initialization and Lake configuration
 - [x] Main definitions and theorem statements
-- [x] Compileable `sorry`-based scaffold for the paper's core results
+- [x] `PerfectFunctionalRepresentations.Main` builds without `sorry`
+- [x] Theorem 1 backward implication constructively
+- [x] Constructive endpoint reduction from lifted matrices to `one_vector_matrix`
+- [x] Support-restricted recursive infrastructure for theorem 1 forward implication
 - [x] GitHub Pages, API docs, and blueprint website scaffold
-- [ ] Fill in formal proofs
+- [ ] Constructive bridge from raw `M` to `supportedSubmatrix M`
+- [ ] Complete theorem 1 forward implication and remove the remaining wrapper axioms
 
 ## Notes
 
-- Proofs are currently stubbed with `sorry`
-- Focus on key lemmas and theorems from the paper
-- Information-theoretic privacy and connections to other measures deferred
-- The project currently uses a small self-contained scalar model (`Probability := Rat`) so the skeleton compiles without adding mathlib yet
+- The main target currently compiles without `sorry`, but theorem 1's outer forward wrapper still uses explicit axioms for the unfinished high-level extraction and start-side bridge steps
+- Focus remains on the key lemmas and theorems from the paper, especially theorem 1
+- Information-theoretic privacy and connections to other measures remain deferred
+- The project currently uses a small self-contained scalar model (`Probability := Rat`) instead of mathlib-based measure theory

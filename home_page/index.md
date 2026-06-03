@@ -7,13 +7,14 @@ title: Formal Verification of "On Perfect Functional Representations"
   <p class="eyebrow">Lean 4 formalization</p>
   <h1>On Perfect Functional Representations</h1>
   <p class="lead">
-    This site collects the Lean scaffold for the paper, the generated API documentation,
+    This site collects the Lean formalization of the paper, generated API documentation,
     and a Blueprint dependency graph for the main definitions, lemmas, and theorems.
   </p>
   <div class="hero-meta">
     <span class="pill">Lean 4.29.1</span>
     <span class="pill">Blueprint dependency graph enabled</span>
-    <span class="pill">Proofs currently tracked with placeholders</span>
+    <span class="pill">Main target builds without sorry</span>
+    <span class="pill">Theorem 1 forward direction in progress</span>
   </div>
 </section>
 
@@ -51,18 +52,23 @@ title: Formal Verification of "On Perfect Functional Representations"
 <section class="section">
   <h2>Current status</h2>
   <p>
-    The Lean package already compiles with theorem statements and placeholder proofs. The website scaffold now
-    exposes the current mathematical structure publicly, while leaving room to tighten the definitions and replace
-    each <code>sorry</code> proof incrementally.
+    The current Lean development has moved beyond a placeholder scaffold. The main target now builds without
+    <code>sorry</code>, theorem 1's backward implication is constructive, and the endpoint reduction from the lifted
+    matrix to the one-vector matrix is constructive. The remaining gap in theorem 1 is the start-side bridge from a
+    raw singular matrix <code>M</code> to the canonical support-restricted recursive state.
   </p>
   <div class="status-grid">
     <div class="status-block">
       <strong>Formal content</strong>
-      <span>Main definitions plus Lemma 1-6 and Theorem 1-2 are present as Lean declarations.</span>
+      <span>Finite positive representations, lifted-output machinery, and support-restricted recursion for theorem 1 are implemented in Lean.</span>
     </div>
     <div class="status-block">
       <strong>Documentation</strong>
       <span>GitHub Actions will build the home page, the blueprint, and the generated API docs together.</span>
+    </div>
+    <div class="status-block">
+      <strong>Current blocker</strong>
+      <span>The constructive PPS/PPM/VPM bridge from <code>M</code> to <code>supportedSubmatrix M</code> is still the main unfinished theorem-1-forward step.</span>
     </div>
     <div class="status-block">
       <strong>Publishing target</strong>

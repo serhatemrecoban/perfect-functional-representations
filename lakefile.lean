@@ -3,7 +3,7 @@ open Lake DSL
 
 package «PerfectFunctionalRepresentations»
 
-require checkdecls from git "https://github.com/PatrickMassot/checkdecls.git"
+require checkdecls from git "https://github.com/PatrickMassot/checkdecls.git" @ "3d425859e73fcfbef85b9638c2a91708ef4a22d4"
 
 @[default_target]
 lean_lib «PerfectFunctionalRepresentations» where
